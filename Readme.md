@@ -1,6 +1,6 @@
 `printf` Through Semihosting Under SW4STM32
 ===========================================
-Most embedded systems does not come with a display. To print/dump useful information, like log, for debugging purpose can be a bit tricky. However GCC, GDB, and OpenOCD provide `semihosting` to enable dumping the information onto the the debugging cosole instead [1]. The feature must be manually enabled. The following steps show how to do it.
+Most embedded systems does not come with a display. To print/dump useful information, like log, for debugging purpose can be a bit tricky. However GCC, GDB, and OpenOCD provide `semihosting` to enable dumping the information onto the the debugging console instead [1]. The feature must be manually enabled. The following steps show how to do it.
 
 First, we need to tell the `linker` to link with `libc` library (from `nanolib C`) that provides `printf` function and also to link with `librdimon` library that does the semihosting. This is done by configuring the the linker flag. To do that under SW4STM32 IDE, click on `Project Properties`, select `C/C++ Build`, then `Settings`. In the `MCU GCC Linker` menu, select `Miscellaneous`, then update the `Linker flags` field with:
 ```
@@ -54,7 +54,7 @@ The following shows how it looks like:
 
 The `tb` instruction is to create a temporary breakpoint at main. Note that temporary breakpoint means once breakpoint is triggered, it is automatically discarded. To create a permanent break point, use `b` instead. The next line asks the monitor to reset and halt the MCU. The last line, request GDB to continue (run).
 
-To view the list of brakpoints, type `info breakpoints` and you get something like the below:
+To view the list of breakpoints, type `info breakpoints` and you get something like the below:
 ```
 Num     Type           Disp Enb Address    What
 13      breakpoint     del  y   <PENDING>  main; monitor reset halt; c
