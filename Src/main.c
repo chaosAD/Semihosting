@@ -92,7 +92,11 @@ int main(void)
   MX_GPIO_Init();
 
   /* USER CODE BEGIN 2 */
-  printf("Hello, world!\n");
+  printf("Hello STM32!\n");
+  printf("HAL version:0x%x\n", HAL_GetHalVersion());
+  printf("STM32: device ID:0x%x, revision ID:0x%x\n", HAL_GetDEVID(),		\
+		  	  	  	  	  	  	  	  	  	  	  	  	HAL_GetREVID());
+  printf("floating point value:%f\n", 123.4567890);
   /* USER CODE END 2 */
 
   /* Infinite loop */
