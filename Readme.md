@@ -6,9 +6,9 @@ First, we need to tell the `linker` to link with `libc` library (from `nanolib C
 ```
 -specs=nosys.specs -specs=nano.specs -specs=rdimon.specs -lc -lrdimon
 ```
-![GDB console](https://github.com/chaosAD/Semihosting/blob/master/Docs/images/Advanced_Semihosting1.png)
+![Advanced_Semihosting1](https://github.com/chaosAD/Semihosting/blob/master/Docs/images/Advanced_Semihosting1.png)
 
-In Debug Configurations add the following option in the Startup Tab. To get there, click on `Run` and then `Debug Configurations...`:
+In `Debug Configurations` add the following option in the `Startup` tab. To get there, click on `Run` and then `Debug Configurations...`:
 ```
 monitor arm semihosting enable
 ```
@@ -32,6 +32,19 @@ Run the program under debug mode. The `Hello, world!` should be printed in the O
 
 ![HelloWorldPrintedInConsole](https://github.com/chaosAD/Semihosting/blob/master/Docs/images/HelloWorldPrintedInConsole.png)
 
+Printing integers values are fine. But it does not play well with floating point value:
+
+![FailToPrintFloat](https://github.com/chaosAD/Semihosting/blob/master/Docs/images/FailToPrintFloat.png)
+
+To allow printing floatin point values, in `Debug Configurations` remove the following option:
+
+![RemoveNanoSpecs](https://github.com/chaosAD/Semihosting/blob/master/Docs/images/RemoveNanoSpecs.png)
+
+Now, it should be able to get printed:
+
+![RemoveNanoSpecs](https://github.com/chaosAD/Semihosting/blob/master/Docs/images/AbleToPrintFloat.png)
+
+The only catch is that the **code size** and the **data size** increase about 3 and 20 folds, respectively.
 
 
 Debugging
