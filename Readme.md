@@ -3,12 +3,18 @@ Debugging
 
 Resetting Program
 -----------------
-To reset the program under debugging mode, click on the GDB console and type:
+To reset the program under debugging mode, click on the GDB console (in `Debug` perspective):
+
+![GDB console](https://github.com/chaosAD/Semihosting/blob/master/Docs/images/OpenGdbConsole.png)
+
+and type:
 ```
 tb main
 monitor reset halt
 c
 ```
+The following shows how it looks like:
+![Resetting the program](https://github.com/chaosAD/Semihosting/blob/master/Docs/images/ResettingProgram.png)
 
 The `tb` instruction is to create a temporary breakpoint at main. Note that temporary breakpoint means once breakpoint is triggered, it is automatically discarded. To create a permanent break point, use `b` instead. The next line asks the monitor to reset and halt the MCU. The last line, request GDB to continue (run).
 
