@@ -8,6 +8,29 @@ First, we need to tell the `linker` to link with `libc` library (from `nanolib C
 ```
 ![GDB console](https://github.com/chaosAD/Semihosting/blob/master/Docs/images/Advanced_Semihosting1.png)
 
+In Debug Configurations add the following option in the Startup Tab. To get there, click on `Run` and then `Debug Configurations...`:
+```
+monitor arm semihosting enable
+```
+![GdbInitScript](https://github.com/chaosAD/Semihosting/blob/master/Docs/images/GDBInitScript.png)
+
+Add the following function prototype and function call. The `initialise_monitor_handles()` call must be before any printf call:
+
+![MonInitCode](https://github.com/chaosAD/Semihosting/blob/master/Docs/images/MonitorInitializationCode.png)
+
+Include `stdio.h` header file in `main.c`:
+
+![IncludeStdio](https://github.com/chaosAD/Semihosting/blob/master/Docs/images/IncludeStdio.png)
+
+Add `printf()` call to print any message desired. Note that `\n` is important to force the message to be flushed to the console. Otherwise the message will not appear.
+
+![PrintStatement](https://github.com/chaosAD/Semihosting/blob/master/Docs/images/PrintStatement.png)
+
+Run the program under debug mode. The `Hello, world!` should be printed in the OpenOCD console like the following:
+
+![HelloWorldPrintedInConsole](https://github.com/chaosAD/Semihosting/blob/master/Docs/images/HelloWorldPrintedInConsole.png)
+
+
 
 Debugging
 =========
