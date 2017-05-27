@@ -38,6 +38,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f1xx_hal.h"
+#include <stdio.h>
 
 /* USER CODE BEGIN Includes */
 
@@ -53,6 +54,7 @@
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+extern void initialise_monitor_handles(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
@@ -67,7 +69,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
+  initialise_monitor_handles();
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -90,7 +92,7 @@ int main(void)
   MX_GPIO_Init();
 
   /* USER CODE BEGIN 2 */
-
+  printf("Hello, world!\n");
   /* USER CODE END 2 */
 
   /* Infinite loop */

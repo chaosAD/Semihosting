@@ -1,3 +1,14 @@
+`printf` Through Semihosting Under SW4STM32
+===========================================
+Most embedded systems does not come with a display. To print/dump useful information, like log for debugging purpose, can be a bit tricky. However GCC, GDB, and OpenOCD provide `semihosting` to enable dumping the information onto the the debugging cosole instead [1]. The feature must be manually enabled. The following steps show how to do it.
+
+First, we need to tell the `linker` to link with `libc` library (from `nanolib C`) that provides `printf` function and also to link with `librdimon` library that does the semihosting. This is done by configuring the the linker flag. To do that under SW4STM32 IDE, click on `Project Properties`, select `C/C++ Build`, then `Settings`. In the `MCU GCC Linker` menu, select `Miscellaneous`, then update the `Linker flags` field with:
+```
+-specs=nosys.specs -specs=nano.specs -specs=rdimon.specs -lc -lrdimon
+```
+![GDB console](https://github.com/chaosAD/Semihosting/blob/master/Docs/images/Advanced_Semihosting1.png)
+
+
 Debugging
 =========
 
@@ -39,3 +50,7 @@ x                         # Step 1 instruction
 x/5i                      # Step 5 instructions
 p/x $pc                   # Print PC (Program Counter) in hex   
 ```
+
+References
+==========
+[1] http://bgamari.github.io/posts/2014-10-31-semihosting.html
