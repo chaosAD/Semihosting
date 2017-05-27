@@ -1,6 +1,6 @@
 `printf` Through Semihosting Under SW4STM32
 ===========================================
-Most embedded systems does not come with a display. To print/dump useful information, like log for debugging purpose, can be a bit tricky. However GCC, GDB, and OpenOCD provide `semihosting` to enable dumping the information onto the the debugging cosole instead [1]. The feature must be manually enabled. The following steps show how to do it.
+Most embedded systems does not come with a display. To print/dump useful information, like log, for debugging purpose can be a bit tricky. However GCC, GDB, and OpenOCD provide `semihosting` to enable dumping the information onto the the debugging cosole instead [1]. The feature must be manually enabled. The following steps show how to do it.
 
 First, we need to tell the `linker` to link with `libc` library (from `nanolib C`) that provides `printf` function and also to link with `librdimon` library that does the semihosting. This is done by configuring the the linker flag. To do that under SW4STM32 IDE, click on `Project Properties`, select `C/C++ Build`, then `Settings`. In the `MCU GCC Linker` menu, select `Miscellaneous`, then update the `Linker flags` field with:
 ```
@@ -12,13 +12,15 @@ In Debug Configurations add the following option in the Startup Tab. To get ther
 ```
 monitor arm semihosting enable
 ```
+The initialization script will be run everytime the debugger (GDB) is fired up. The command tells the OpenOCD to enable ARM semihosting. 
+
 ![GdbInitScript](https://github.com/chaosAD/Semihosting/blob/master/Docs/images/GDBInitScript.png)
 
-Add the following function prototype and function call. The `initialise_monitor_handles()` call must be before any printf call:
+Add the following function prototype and function call. The `initialise_monitor_handles()` call must be before any printf call. The function initializes the hardware and software to handle semihosting:
 
 ![MonInitCode](https://github.com/chaosAD/Semihosting/blob/master/Docs/images/MonitorInitializationCode.png)
 
-Include `stdio.h` header file in `main.c`:
+Include `stdio.h` header file in `main.c`. The header is required to use `printf()`:
 
 ![IncludeStdio](https://github.com/chaosAD/Semihosting/blob/master/Docs/images/IncludeStdio.png)
 
