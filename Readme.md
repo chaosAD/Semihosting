@@ -1,6 +1,6 @@
 `printf` Through Semihosting Under SW4STM32
 ===========================================
-Most embedded systems does not come with a display. To print/dump useful information, like log, for debugging purpose can be a bit tricky. However GCC, GDB, and OpenOCD provide `semihosting` to enable dumping the information onto the the debugging console instead [1]. The feature must be manually enabled. The following steps show how to do it.
+Most embedded systems does not come with a display. To print/dump useful information, like log, for debugging purpose can be a bit tricky. However GCC, GDB, and OpenOCD provide `semihosting` to enable dumping of the information onto the the debugging console instead. The feature must be manually enabled. The following steps show how to do it (I used the idea from [here][1]).
 
 First, we need to tell the `linker` to link with `libc` library (from `nanolib C`) that provides `printf` function and also to link with `librdimon` library that does the semihosting. This is done by configuring the the linker flag. To do that under SW4STM32 IDE, click on `Project Properties`, select `C/C++ Build`, then `Settings`. In the `MCU GCC Linker` menu, select `Miscellaneous`, then update the `Linker flags` field with:
 ```
@@ -32,19 +32,30 @@ Run the program under debug mode. The `Hello, world!` should be printed in the O
 
 ![HelloWorldPrintedInConsole](https://github.com/chaosAD/Semihosting/blob/master/Docs/images/HelloWorldPrintedInConsole.png)
 
-Printing integers values are fine. But it does not play well with floating point value:
+It is fine with printing integer values. But it does not play well with floating point value:
 
 ![FailToPrintFloat](https://github.com/chaosAD/Semihosting/blob/master/Docs/images/FailToPrintFloat.png)
 
-To allow printing floatin point values, in `Debug Configurations` remove the following option:
-
+To allow the printing of floating point values, in `Debug Configurations` **remove** the following option, as suggested [here][2]:
+```
+-specs=nano.specs
+```
 ![RemoveNanoSpecs](https://github.com/chaosAD/Semihosting/blob/master/Docs/images/RemoveNanoSpecs.png)
 
 Now, it should be able to get printed:
 
 ![RemoveNanoSpecs](https://github.com/chaosAD/Semihosting/blob/master/Docs/images/AbleToPrintFloat.png)
 
-The only catch is that the **code size** and the **data size** increase about 3 and 20 folds, respectively.
+The only catch is that the **code size** and the **data size** are increased by about 20KB and 2KB, respectively.
+
+
+`sscanf` Integer, Float, and Double
+===================================
+With the above change to the linker flag, we can also convert integer, float, and double values in a string and store them into some variables using `sscanf()`.
+
+![RemoveNanoSpecs](https://github.com/chaosAD/Semihosting/blob/master/Docs/images/sscanfIntFloatDouble.png)
+
+Note that for reading a `double`, `sccanf()` requires `%lf` instead of `%f` as the type field. However, printing a `double` by `printf()` uses `%f` as the type field, which is the same for printing a `float`. Also the **code size** is increased by an additional of about 20KB. 
 
 
 Debugging
@@ -65,7 +76,7 @@ c
 The following shows how it looks like:
 ![Resetting the program](https://github.com/chaosAD/Semihosting/blob/master/Docs/images/ResettingProgram.png)
 
-The `tb` instruction is to create a temporary breakpoint at main. Note that temporary breakpoint means once breakpoint is triggered, it is automatically discarded. To create a permanent break point, use `b` instead. The next line asks the monitor to reset and halt the MCU. The last line, request GDB to continue (run).
+The `tb` instruction is to create a temporary breakpoint at `main()`. Note that _temporary breakpoint_ means that once the breakpoint has been triggered, it is automatically discarded. To create a permanent break point, use `b` instead. The next line asks the monitor to reset and halt the MCU. The last line, requests GDB to continue (resume running).
 
 To view the list of breakpoints, type `info breakpoints` and you get something like the below:
 ```
@@ -80,7 +91,7 @@ The numbers on the leftmost are the IDs of the breakpoints. To delete a breakpoi
 
 Other Useful GDB Commands
 -------------------------
-The are a number of useful GDB commands that you might want to try out:
+There are a number of useful GDB commands that you might want to try out:
 ```
 info registers
 list main
@@ -91,4 +102,8 @@ p/x $pc                   # Print PC (Program Counter) in hex
 
 References
 ==========
-[1] http://bgamari.github.io/posts/2014-10-31-semihosting.html
+1. http://bgamari.github.io/posts/2014-10-31-semihosting.html
+2. https://community.st.com/thread/41124-floating-point-support-in-sscanf
+
+[1]: http://bgamari.github.io/posts/2014-10-31-semihosting.html
+[2]: https://community.st.com/thread/41124-floating-point-support-in-sscanf

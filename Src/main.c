@@ -69,6 +69,9 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
+  int intVal;
+  float floatVal;
+  double doubleVal;
   initialise_monitor_handles();
   /* USER CODE END 1 */
 
@@ -94,9 +97,14 @@ int main(void)
   /* USER CODE BEGIN 2 */
   printf("Hello STM32!\n");
   printf("HAL version:0x%x\n", HAL_GetHalVersion());
-  printf("STM32: device ID:0x%x, revision ID:0x%x\n", HAL_GetDEVID(),		\
-		  	  	  	  	  	  	  	  	  	  	  	  	HAL_GetREVID());
+  printf("STM32: device ID:0x%x, revision ID:0x%x\n", HAL_GetDEVID(),     \
+                                                      HAL_GetREVID());
   printf("floating point value:%f\n", 123.4567890);
+  sscanf("123 67.89012345 12345.67890123456789", "%d %f %lf", &intVal,    \
+                                                    &floatVal, &doubleVal);
+  printf("int value:%d , float value:%f, double value:%.10f\n", intVal,   \
+                                                    floatVal, doubleVal);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
