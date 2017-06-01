@@ -104,6 +104,8 @@ References
 ==========
 1. http://bgamari.github.io/posts/2014-10-31-semihosting.html
 2. https://community.st.com/thread/41124-floating-point-support-in-sscanf
+3. http://wiki.stm32duino.com/index.php?title=Blue_Pill
+4. http://wiki.stm32duino.com/index.php?title=STM32_Smart_V2.0
 
 [1]: http://bgamari.github.io/posts/2014-10-31-semihosting.html
 [2]: https://community.st.com/thread/41124-floating-point-support-in-sscanf
