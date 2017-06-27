@@ -63,6 +63,7 @@ Debugging
 
 Resetting Program
 -----------------
+[**Update (27/06/2017): New version of SW4STM32 IDE has a button on the toolbar to reset the MCU. However, the following serves as informational text.**]
 To reset the program under debugging mode, click on the GDB console (in `Debug` perspective):
 
 ![GDB console](https://github.com/chaosAD/Semihosting/blob/master/Docs/images/OpenGdbConsole.png)
