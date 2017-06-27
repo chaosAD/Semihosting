@@ -99,6 +99,11 @@ int main(void)
   printf("HAL version:0x%x\n", HAL_GetHalVersion());
   printf("STM32: device ID:0x%x, revision ID:0x%x\n", HAL_GetDEVID(),     \
                                                       HAL_GetREVID());
+  printf("STM32: flash size:%dkB\n", *(uint16_t *)FLASH_SIZE_DATA_REGISTER);
+  printf("STM32: 96-unique ID:0x%08x %08x %08x\n",                        \
+                                             *(uint32_t *)(UID_BASE + 8), \
+                                             *(uint32_t *)(UID_BASE + 4), \
+                                             *(uint32_t *)UID_BASE);	
   printf("floating point value:%f\n", 123.4567890);
   sscanf("123 67.89012345 12345.67890123456789", "%d %f %lf", &intVal,    \
                                                     &floatVal, &doubleVal);
